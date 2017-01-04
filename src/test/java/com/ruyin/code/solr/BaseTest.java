@@ -50,9 +50,4 @@ public class BaseTest {
         QueryResponse response = solrClient.query(new SolrQuery("*:*"));
         System.out.println(response);
     }
-
-    @Test
-    public void deleteIndex(){
-
-    }
 }

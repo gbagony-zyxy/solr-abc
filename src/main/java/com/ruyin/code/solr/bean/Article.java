@@ -16,21 +16,24 @@ public class Article {
     @Field
     private String title;
     @Field
-    private String description;
+    private String desc;
     @Field
     private String context;
     @Field
     private Date writeDate;
+    @Field
+    private double price;
 
     public Article(){}
 
-    public Article(String post_id, String author, String title, String description, String context, Date writeDate) {
+    public Article(String post_id, String author, String title, String desc, String context, Date writeDate,double price) {
         this.post_id = post_id;
         this.author = author;
         this.title = title;
-        this.description = description;
+        this.desc = desc;
         this.context = context;
         this.writeDate = writeDate;
+        this.price = price;
     }
 
     public String getPost_id() {
@@ -57,12 +60,12 @@ public class Article {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getContext() {
@@ -81,15 +84,24 @@ public class Article {
         this.writeDate = writeDate;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
                 "post_id='" + post_id + '\'' +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                ", desc='" + desc + '\'' +
                 ", context='" + context + '\'' +
                 ", writeDate=" + writeDate +
+                ", price=" + price +
                 '}';
     }
 }
