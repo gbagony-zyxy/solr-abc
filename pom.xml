@@ -64,6 +64,12 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>6.3.0</version>
     </dependency>-->
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-core</artifactId>
+      <version>6.3.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
