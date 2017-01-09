@@ -27,10 +27,14 @@ public class InComingData {
         //queryHl();
     }
 
+    private static void importOneData(){
+        Article article = new Article("2017","cctv","昔年","","",new Date(),111);
+    }
+
     private static void importData() throws IOException, SolrServerException {
         Article article1 = new Article("1001", "鲁迅", "纪念刘和珍君", "有的人死了，她还活着...", "真的猛士，敢于直面惨淡的人生，敢于正视淋漓的鲜血。这是怎样的哀痛者和幸福者？然而造化又常常为庸人设计，以时间的流驶，来洗涤旧迹，仅使留下淡红的血色和微漠的悲哀。在这淡红的血色和微漠的悲哀中，又给人暂得偷生，维持着这似人非人的世界。我不知道这样的世界何时是一个尽头！", new Date(),20);
         Article article2 = new Article("1002", "海子", "面朝大海", "做一个幸福的人", "面朝大海，春暖花开", new Date(),50);
-        Article article3 = new Article("1003", "司马迁abaqus软件", "史记ABAQUS", "史家之绝唱，无韵之离骚。Nice to meet you,abaqus软件现在很populate", "第一部编年体纪史。", new Date(),100);
+        Article article3 = new Article("1003", "司马迁abaqus软件", "史记ABAQUS", "史家之绝唱，无韵之离骚。Nice to meet you,abaqus软件现在很populate", "第一部编年体通史。", new Date(),100);
         Article article4 = new Article("1004", "John", "How to relax...", "Worth you to reflection...", "One of the major benefits of the Spring IO Platform is that it provides a set of versions that are known to work together," +
                 " while also allowing you to override those versions to suit the needs of your project.Both the Spring IO Platform bom, " +
                 "and the Spring Boot bom from which it inherits, use properties to define the versions of the managed dependencies. " +
@@ -40,7 +44,8 @@ public class InComingData {
         Article article5 = new Article("1005", "Bob", "How to breath...", "Worth our to try...", "Just do it!", new Date(),111);
 
         Article article6 = new Article("1006", "wxz", "To be strongger...", "No give up ,no cry...", "A little porblem", new Date(),115);
-        List<Article> articles = Arrays.asList(article1, article2, article3, article4, article5,article6);
+        Article article7 = new Article("1007", "bbb", "活着", "活着就是一种修行", "不让回忆暗淡，努力修行", new Date(),50);
+        List<Article> articles = Arrays.asList(article1, article2, article3, article4, article5,article6,article7);
         HttpSolrClient client = SolrClient.getSolrClient();
         //client.setParser(new DelegationTokenResponse.JsonMapResponseParser());
         //client.setParser(new XMLResponseParser());
