@@ -7,7 +7,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
  */
 public class SolrClient {
 
-    private static String jetty_solr="http://localhost:9090/solr/mysolr";
+    private static String jetty_solr="http://localhost:8080/solr/mysolr";
     //private static final ThreadLocal<HttpSolrClient> localHolder = new ThreadLocal<>();
     private HttpSolrClient solrClient = null;
 

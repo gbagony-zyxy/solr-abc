@@ -9,12 +9,10 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by gbagony on 2017/1/3.
@@ -22,7 +20,10 @@ import java.util.Map;
 public class InComingData {
 
     public static void main(String[] args) throws IOException, SolrServerException {
-        importData();
+        //atomicSetUpdate();
+        //atomicAddUpdate();
+        atomicIncUpdate();
+        //importData();
         //removeData();
         //queryHl();
     }
@@ -45,7 +46,8 @@ public class InComingData {
 
         Article article6 = new Article("1006", "wxz", "To be strongger...", "No give up ,no cry...", "A little porblem", new Date(),115);
         Article article7 = new Article("1007", "bbb", "活着", "活着就是一种修行", "不让回忆暗淡，努力修行", new Date(),50);
-        List<Article> articles = Arrays.asList(article1, article2, article3, article4, article5,article6,article7);
+        Article article8 = new Article("1008", "<font color=\"red\">大人物</font>", "<a href=\"www.baidu.com\">百度竞价,害人害己</a>", "<p>一切都他妈是为了钱</p>", "<h3>只要能赚钱，什么黑医院都能上头条。。。</h3>", new Date(),666666666);
+        List<Article> articles = Arrays.asList(article1, article2, article3, article4, article5,article6,article7,article8);
         HttpSolrClient client = SolrClient.getSolrClient();
         //client.setParser(new DelegationTokenResponse.JsonMapResponseParser());
         //client.setParser(new XMLResponseParser());
@@ -71,8 +73,8 @@ public class InComingData {
         //query.setRequestHandler("/search");
         query.setHighlight(true);
         query.setParam("hl.fl","author,title,desc,context");
-        query.setHighlightSnippets(100);
-        query.setHighlightFragsize(100);
+        query.setHighlightSnippets(1);
+        query.setHighlightFragsize(200);
         query.setHighlightSimplePre("<font color=\"red\">");
         query.setHighlightSimplePost("</font>");
         query.setParam("start","0");
@@ -80,10 +82,46 @@ public class InComingData {
 
         QueryResponse response = SolrClient.getSolrClient().query(query);
         SolrDocumentList ls = response.getResults();
+        //response 获取bean也是从results当中获取的，所以修改别名只适用于results域，而对于highlight域则不适用(不支持别名)
+        //response.getBeans();
         SolrDocument doc = null;
 
         Map<String, Map<String, List<String>>> map = response.getHighlighting();
         ls.stream().forEach(s-> System.out.println(s));
 
+    }
+
+    //Solr 支持的原子更新，减少内存以及cpu的损耗
+    public static void atomicSetUpdate() throws IOException, SolrServerException {
+        SolrInputDocument document = new SolrInputDocument();
+        document.addField("post_id","1006");
+        Map<String,String> map = new HashMap<>();
+        map.put("set","Solr使用的基本规则");
+        document.addField("title",map);
+        HttpSolrClient client = SolrClient.getSolrClient();
+        client.add(document);
+        client.commit();
+    }
+
+    public static void atomicAddUpdate() throws IOException, SolrServerException {
+        SolrInputDocument document = new SolrInputDocument();
+        document.addField("post_id","1006");
+        Map<String,String> map = new HashMap<>();
+        map.put("add","This is a big problem...");
+        document.addField("context",map);
+        HttpSolrClient client = SolrClient.getSolrClient();
+        client.add(document);
+        client.commit();
+    }
+
+    public static void atomicIncUpdate() throws IOException, SolrServerException {
+        SolrInputDocument document = new SolrInputDocument();
+        document.addField("post_id","1006");
+        Map<String,String> map = new HashMap<>();
+        map.put("inc","100");
+        document.addField("price",map);
+        HttpSolrClient client = SolrClient.getSolrClient();
+        client.add(document);
+        client.commit();
     }
 }
